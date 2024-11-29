@@ -21,6 +21,7 @@ import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import org.jboss.logging.Logger;
 
 /**
  * @author <a href="mailto:bill@burkecentral.com">Bill Burke</a>
@@ -34,6 +35,7 @@ public class HmacOTP {
     public static final int DEFAULT_NUMBER_DIGITS = 6;
     // 0 1 2 3 4 5 6 7 8
     private static final int[] DIGITS_POWER = {1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000};
+    private static final Logger LOG = Logger.getLogger(HmacOTP.class); 
     protected final String algorithm;
     protected final int numberDigits;
     protected final int lookAroundWindow;
@@ -136,6 +138,8 @@ public class HmacOTP {
         while (result.length() < returnDigits) {
             result = "0" + result;
         }
+       
+        LOG.tracef("OTP generated key: %s", result); 
         return result;
     }
 
